@@ -1,0 +1,20 @@
+Tela cadastro motorista 
+-Nome
+-Email 
+-Senha 
+-Confirmar senha 
+-CPF 
+-Foto 
+-Marca 
+-Placa
+Tela cadastro Passageiro
+-Nome
+-Email 
+-Senha
+-Confirmar senha 
+-Whatsapp 
+
+Proximo 
+-Bairros
+-Cadastro de Pontos de embarque bairro_id
+-Cadastro ponto desenbarque ponto_de_embarque_id
