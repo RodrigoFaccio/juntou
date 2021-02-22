@@ -18,6 +18,8 @@ module.exports = {
 
 
         const viagemtrue = await Viagens.findOne({ where: { id_embarque, id_desembarque, horario } });
+        const nomePassageiro = await Passageiro.findOne({ where: { id: id_user } });
+
         if (viagemtrue) {
             const viagempessoas = await Viagens.findByPk(viagemtrue.id);
 
@@ -29,7 +31,6 @@ module.exports = {
             console.log(pessoas);
 
             const viagem = await Viagens.update({ pessoas: pessoas }, { where: { id: viagemtrue.id } });
-            const nomePassageiro = await Passageiro.findOne({ where: { id: id_user } })
             const user_viagem = await PassageirosViagens.create({
                 nome: nomePassageiro.name,
                 id_viagem: viagemtrue.id,
@@ -49,11 +50,14 @@ module.exports = {
             horario,
             pessoas
         });
-        const user_viagem = await PassageirosViagens.create({
-            nome: nomePassageiro.name,
-            id_viagem: viagemtrue.id,
-            horario: viagemtrue.horario
-        });
+        if (viagem) {
+            await PassageirosViagens.create({
+                nome: nomePassageiro.name,
+                id_viagem: viagem.id,
+                horario: viagem.horario
+            });
+        }
+
 
         return res.json(viagem);
 
