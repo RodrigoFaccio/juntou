@@ -13,6 +13,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      id_bairro: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       id_embarque: {
         allowNull: false,
         type: Sequelize.INTEGER,

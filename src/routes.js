@@ -26,9 +26,9 @@ const PassageiroViagens = require('./controllers/PassageirosViagensController');
 const routes = express.Router();
 
 //passageiros
-routes.post('/user', UserController.store);
-routes.get('/user/passageiro/lista', UserController.index);
-routes.post('/user/passageiro/login', TokenController.loginPassageiro);
+routes.post('/passageiro/cadastro', UserController.store);
+routes.get('/passageiro/lista', UserController.index);
+routes.post('/passageiro/login', TokenController.loginPassageiro);
 
 //motoristas
 
@@ -50,7 +50,7 @@ routes.post('/desembarque/:id_embarque/cadastro', DesembarqueController.store);
 
 //viagens
 routes.get('/viagens/lista', Viagens.index);
-routes.post('/viagens/:id_user/cadastro', Viagens.store);
+routes.post('/viagens/:id_user/:id_bairro/:id_embarque/:id_desembarque/cadastro', Viagens.store);
 routes.get('/viagens/motoristas/:id_viagem/lista', PassageiroViagens.indexMotorista)
 
 

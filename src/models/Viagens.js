@@ -9,6 +9,9 @@ class Viagens extends Model {
             nome: DataTypes.STRING,
             id_embarque: DataTypes.INTEGER,
             id_desembarque: DataTypes.INTEGER,
+            id_bairro: DataTypes.INTEGER,
+
+            
             horario: DataTypes.STRING,
             pessoas: DataTypes.INTEGER,
 
