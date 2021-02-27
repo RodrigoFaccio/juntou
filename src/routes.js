@@ -1,6 +1,6 @@
 const express = require('express');
 //usuarios
-const UserController = require('./controllers/UserController');
+const   UserController  = require('./controllers/UserController');
 const UserMotoristaController = require('./controllers/UserMotoristaController');
 //token
 const TokenController = require('./controllers/TokenController');
@@ -12,6 +12,7 @@ const DesembarqueController = require('./controllers/DesembarqueController');
 // Viagens
 const Viagens = require('./controllers/ViagensController');
 const PassageiroViagens = require('./controllers/PassageirosViagensController');
+
 
 //testes
 
@@ -49,9 +50,13 @@ routes.get('/embarque/:nome/pesquisa', EmbarqueController.like);
 routes.post('/desembarque/:id_embarque/cadastro', DesembarqueController.store);
 
 //viagens
-routes.get('/viagens/lista', Viagens.index);
+routes.get('/viagens/lista', Viagens.listAll);
+routes.get('/viagens/list/avaible', Viagens.avaible);
+
+
 routes.post('/viagens/:id_user/:id_bairro/:id_embarque/:id_desembarque/cadastro', Viagens.store);
-routes.get('/viagens/motoristas/:id_viagem/lista', PassageiroViagens.indexMotorista)
+routes.get('/viagens/motoristas/:id_viagem/lista', PassageiroViagens.indexMotorista);
+
 
 
 

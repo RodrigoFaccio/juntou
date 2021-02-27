@@ -13,6 +13,8 @@ class Viagens extends Model {
 
             
             horario: DataTypes.STRING,
+            situation: DataTypes.STRING,
+
             pessoas: DataTypes.INTEGER,
 
 

@@ -1,5 +1,5 @@
-const  {Model, DataTypes}= require('sequelize');
-const { static } = require('express');
+
+const { Model, DataTypes } = require('sequelize');
 const  bcrypt = require('bcryptjs');
 
 
