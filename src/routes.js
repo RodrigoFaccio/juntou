@@ -33,8 +33,8 @@ routes.post('/passageiro/login', TokenController.loginPassageiro);
 
 //motoristas
 
-routes.post('/user/motorista', UserMotoristaController.store);
-routes.post('/user/motorista/login', TokenController.loginMotorista);
+routes.post('/motorista/cadastro', UserMotoristaController.store);
+routes.post('/motorista/login', TokenController.loginMotorista);
 //bairros
 routes.post('/bairro/cadastro', BairrosController.store);
 routes.get('/bairro/lista', BairrosController.list);
@@ -45,7 +45,7 @@ routes.get('/bairro/:nome/pesquisa', BairrosController.like);
 routes.post('/embarque/:id_bairro/cadastro', EmbarqueController.store);
 routes.get('/embarque/:id_bairro/list', EmbarqueController.list);
 routes.get('/embarque/:nome/pesquisa', EmbarqueController.like);
-//desembarques
+//desembarques 
 
 routes.post('/desembarque/:id_embarque/cadastro', DesembarqueController.store);
 
