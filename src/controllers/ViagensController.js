@@ -5,6 +5,7 @@ const Bairro = require('../models/Bairros');
 const Desembarque = require('../models/Desembarque');
 const Embarque = require('../models/Embarque');
 const {Op} =require('sequelize');
+const { create } = require('../models/Viagens');
 
 
 
@@ -19,7 +20,7 @@ module.exports = {
         } = req.body;
         const { id_user, id_embarque,id_desembarque,id_bairro } = req.params;
 
-        const viagemExiste = await Viagens.findOne({
+        const tripTrue = await Viagens.findOne({
             where:{
             horario,
             id_bairro,
@@ -29,80 +30,37 @@ module.exports = {
             }
            }});
            console.log("==============================================")
-        console.log(viagemExiste);
-
-        const NomeBairro  = await Bairro.findOne({where:{id:id_bairro}});
-        
-
-        const NomeDesembarque  = await Desembarque.findOne({where:{id:id_desembarque}});
-        const nome_embarque  = await Embarque.findOne({where:{id:id_embarque}});
-        const user = await Passageiro.findOne({where:{id:id_user}});
+            async function nameTrip(){
+               
+                const embark = await Embarque.findByPk(id_embarque);
+                const disembark = await Desembarque.findByPk(id_desembarque);
+                const nameEmbarkDisembark =  embark.nome+"-"+disembark.nome;
+                return(nameEmbarkDisembark);
 
 
-        const nome = NomeBairro.nome+"-"+NomeDesembarque.nome;
+            }
+        if(tripTrue){
+            const people = tripTrue.pessoas + 1;
+            const trip = await Viagens.update({ pessoas:people  }, { where: { id: tripTrue.id } });
+            return res.json({people});
+        }else{
+            const nome = await nameTrip();
+            const createTrip = await Viagens.create({
+                nome:nome,
+                id_desembarque,
+                id_embarque,
+                id_bairro,
+                pessoas:1,
+                horario,
 
-        // //não tem a viagem s
-        if(viagemExiste==null){
-           
-                const create_viagem = await Viagens.create({
-                    nome,
-                    id_embarque,
-                    id_desembarque,
-                    id_bairro,
-                    horario,
-                    pessoas:1,
-                    situation:'0'
-                 });
-     
-                 await PassageirosViagens.create({
-                     nome:user.name,
-                     id_viagem:create_viagem.id,
-                     horario,
-                     nome_embarque:nome_embarque.nome
-     
-     
-                 });
-                return res.json(create_viagem);
-            
-
-           
+            });
+            return res.json(createTrip);
         }
 
        
-            if (viagemExiste.pessoas < 4) {
-                 const ViagemAddPessoas = await Viagens.findOne({where:{id:viagemExiste.id}});
-                const totalpessoas = ViagemAddPessoas.pessoas + 1;
-                const viagem = await Viagens.update({ pessoas: totalpessoas }, { where: { id: viagemExiste.id } });
-                return res.json(viagemExiste);
-       
-            }else{
-                const create_viagem = await Viagens.create({
-                    nome,
-                    id_embarque,
-                    id_desembarque,
-                    id_bairro,
-                    horario,
-                    pessoas,
-                    situation:'0'
 
-                 });
-     
-                 await PassageirosViagens.create({
-                     nome:user.name,
-                     id_viagem:create_viagem.id,
-                     horario,
-                     nome_embarque:nome_embarque.nome
-     
-     
-                 });
-                return res.json(create_viagem);
-            }
-            
+           
         
-       
-        
-
-
 
 
     },
