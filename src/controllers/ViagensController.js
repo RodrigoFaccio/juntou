@@ -30,7 +30,7 @@ module.exports = {
             }
            }});
            console.log("==============================================")
-            async function nameTrip(){
+             async function nameTrip(){
                
                 const embark = await Embarque.findByPk(id_embarque);
                 const disembark = await Desembarque.findByPk(id_desembarque);
@@ -39,10 +39,23 @@ module.exports = {
 
 
             }
+             async function serchNamePassenger(){
+                const Passenger = await Passageiro.findByPk(id_user);
+                return(Passenger.name);
+            }
         if(tripTrue){
             const people = tripTrue.pessoas + 1;
             const trip = await Viagens.update({ pessoas:people  }, { where: { id: tripTrue.id } });
-            return res.json({people});
+            const namePassenger  = await serchNamePassenger();
+           const nome_embarque =  namePassenger.split("-");
+            const peopleTrip = await PassageirosViagens.create({
+                nome:namePassenger,
+                id_viagem:tripTrue.id,
+                horario,
+                nome_embarque:nome_embarque[0]
+
+            });
+            return res.json({peopleTrip});
         }else{
             const nome = await nameTrip();
             const createTrip = await Viagens.create({
@@ -52,6 +65,15 @@ module.exports = {
                 id_bairro,
                 pessoas:1,
                 horario,
+
+            });
+            const namePassenger  = await serchNamePassenger();
+            const nome_embarque =  namePassenger.split("-");
+            const peopleTrip = await PassageirosViagens.create({
+                nome:namePassenger,
+                id_viagem:createTrip.id,
+                horario,
+                nome_embarque:nome_embarque[0]
 
             });
             return res.json(createTrip);
