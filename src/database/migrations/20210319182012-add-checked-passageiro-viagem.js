@@ -1,8 +1,8 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
      return  queryInterface.addColumn(
-        'trips',
-        'situation',{
+        'trip_people',
+        'checked',{
           type:Sequelize.STRING,
         },
       );
@@ -10,8 +10,8 @@ module.exports = {
   
     down: async (queryInterface, Sequelize) => {
       return  queryInterface.removeColumn(
-        'trips',
-        'situation'
+        'trip_people',
+        'checked'
       );
     },
     

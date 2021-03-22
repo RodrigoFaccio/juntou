@@ -38,24 +38,24 @@ routes.post('/motorista/login', TokenController.loginMotorista);
 //bairros
 routes.post('/bairro/cadastro', BairrosController.store);
 routes.get('/bairro/lista', BairrosController.list);
-routes.get('/bairro/:nome/pesquisa', BairrosController.like);
+routes.get('/bairro/:name/pesquisa', BairrosController.like);
 
 
 //embarques
-routes.post('/embarque/:id_bairro/cadastro', EmbarqueController.store);
-routes.get('/embarque/:id_bairro/list', EmbarqueController.list);
-routes.get('/embarque/:nome/pesquisa', EmbarqueController.like);
+routes.post('/embarque/:id_district/cadastro', EmbarqueController.store);
+routes.get('/embarque/:id_district/list', EmbarqueController.list);
+routes.get('/embarque/:name/pesquisa', EmbarqueController.like);
 //desembarques 
 
-routes.post('/desembarque/:id_embarque/cadastro', DesembarqueController.store);
+routes.post('/desembarque/:id_embark/cadastro', DesembarqueController.store);
 
 //viagens
 routes.get('/viagens/lista', Viagens.listAll);
-routes.get('/viagens/list/avaible', Viagens.avaible);
+routes.get('/viagens/list/available', Viagens.available);
 
 
-routes.post('/viagens/:id_user/:id_bairro/:id_embarque/:id_desembarque/cadastro', Viagens.store);
-routes.get('/viagens/motoristas/:id_viagem/lista', PassageiroViagens.indexMotorista);
+routes.post('/viagens/:id_user/:id_district/:id_embark/:id_disembark/cadastro', Viagens.store);
+routes.get('/viagens/motoristas/:id_trip/lista', PassageiroViagens.indexMotorista);
 
 
 

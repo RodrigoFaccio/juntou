@@ -6,17 +6,17 @@ const {Op} =require('sequelize');
 
 module.exports={
     async store(req,res){
-          const {nome,cep} = req.body;
+          const {name,cep} = req.body;
 
-          
+           
          
 
-          const bairro = await Bairros.create({nome,cep});
+          const bairro = await Bairros.create({name,cep});
           return res.json(bairro);
 
     },
     async list(req,res){
-        const {nome,cep} = req.body;
+        const {name,cep} = req.body;
 
         
        
@@ -26,13 +26,13 @@ module.exports={
 
   },
   async like(req,res){
-    const {nome} = req.params;
+    const {name} = req.params;
 
     const bairrosNome = await Bairros.findAll({
-        attributes:['nome'],
+        attributes:['name'],
         where:{
-            nome:{
-                [Op.like]:'%'+nome+'%'
+            name:{
+                [Op.like]:'%'+name+'%'
             }
         },
     });

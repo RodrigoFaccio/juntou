@@ -3,13 +3,13 @@ const { static } = require('express');
 const bcrypt = require('bcryptjs');
 
 
-class ViagensPessoas extends Model {
+class TripPeople extends Model {
     static init(sequelize) {
         super.init({
-            nome: DataTypes.STRING,
-            id_viagem: DataTypes.INTEGER,
-            horario: DataTypes.STRING,
-            nome_embarque:DataTypes.STRING,
+            name: DataTypes.STRING,
+            id_trip: DataTypes.INTEGER,
+            time: DataTypes.STRING,
+            name_embark:DataTypes.STRING,
 
 
 
@@ -26,4 +26,4 @@ class ViagensPessoas extends Model {
 
 
 }
-module.exports = ViagensPessoas;
+module.exports = TripPeople;

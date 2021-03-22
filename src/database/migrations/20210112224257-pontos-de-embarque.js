@@ -4,25 +4,25 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
    
     
-      await queryInterface.createTable('embarques', { 
+      await queryInterface.createTable('embarks', { 
         id:{
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER,
          },
-         nome:{
+         name:{
           allowNull: false,
           type: Sequelize.STRING,
          },
-         referencia: {
+         reference: {
           allowNull: false,
           type: Sequelize.STRING,
         },
-        id_bairro: {
+        id_district: {
           allowNull: false,
           type: Sequelize.INTEGER,
-          references:{model:'bairros', key:'id'},
+          references:{model:'districts', key:'id'},
           onUpdate:'CASCADE',
           onDelete:'CASCADE',
 
@@ -43,7 +43,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     
-      await queryInterface.dropTable('embarques');
+      await queryInterface.dropTable('embarks');
     
   }
 };

@@ -1,9 +1,9 @@
-const Viagens = require('../models/Viagens');
-const PassageirosViagens = require('../models/PassageirosViagens');
-const Passageiro = require('../models/UserPassageiro');
-const Bairro = require('../models/Bairros');
-const Desembarque = require('../models/Desembarque');
-const Embarque = require('../models/Embarque');
+const Trip = require('../models/Viagens');
+const PassengerTrip = require('../models/PassageirosViagens');
+const Passenger = require('../models/UserPassageiro');
+const District = require('../models/Bairros');
+const Disembark = require('../models/Desembarque');
+const Embark = require('../models/Embarque');
 const {Op} =require('sequelize');
 const { create } = require('../models/Viagens');
 
@@ -15,65 +15,67 @@ const { create } = require('../models/Viagens');
 module.exports = {
     async store(req, res) {
         const {
-           horario,
-            pessoas
+           time
         } = req.body;
-        const { id_user, id_embarque,id_desembarque,id_bairro } = req.params;
+        const { id_user, id_embark,id_disembark,id_district } = req.params;
 
-        const tripTrue = await Viagens.findOne({
+        const tripTrue = await Trip.findOne({
             where:{
-            horario,
-            id_bairro,
+            time,
+            id_district,
 
-            pessoas:{
+            people:{
                 [Op.lt]: 4,
             }
            }});
            console.log("==============================================")
              async function nameTrip(){
                
-                const embark = await Embarque.findByPk(id_embarque);
-                const disembark = await Desembarque.findByPk(id_desembarque);
-                const nameEmbarkDisembark =  embark.nome+"-"+disembark.nome;
+                const embark = await Embark.findByPk(id_embark);
+                const disembark = await Disembark.findByPk(id_disembark);
+                const nameEmbarkDisembark =  embark.name+"-"+disembark.name;
                 return(nameEmbarkDisembark);
 
 
             }
-             async function serchNamePassenger(){
-                const Passenger = await Passageiro.findByPk(id_user);
-                return(Passenger.name);
+             async function searchNamePassenger(){
+                const passenger = await Passenger.findByPk(id_user);
+                return(passenger.name);
             }
         if(tripTrue){
-            const people = tripTrue.pessoas + 1;
-            const trip = await Viagens.update({ pessoas:people  }, { where: { id: tripTrue.id } });
-            const namePassenger  = await serchNamePassenger();
-           const nome_embarque =  namePassenger.split("-");
-            const peopleTrip = await PassageirosViagens.create({
-                nome:namePassenger,
-                id_viagem:tripTrue.id,
-                horario,
-                nome_embarque:nome_embarque[0]
+            const people = tripTrue.people + 1;
+            const trip = await Trip.update({ people:people  }, { where: { id: tripTrue.id } });
+            const namePassenger  = await searchNamePassenger();
+           const name_embark =  namePassenger.split("-");
+            const peopleTrip = await PassengerTrip.create({
+                name:namePassenger,
+                id_trip:tripTrue.id,
+                time,
+                name_embark:name_embark[0],
+                checked:"true"
+
 
             });
             return res.json({peopleTrip});
         }else{
-            const nome = await nameTrip();
-            const createTrip = await Viagens.create({
-                nome:nome,
-                id_desembarque,
-                id_embarque,
-                id_bairro,
-                pessoas:1,
-                horario,
+            const name = await nameTrip();
+            const createTrip = await Trip.create({
+                name:name,
+                id_disembark,
+                id_embark,
+                id_district,
+                people:1,
+                time,
 
             });
-            const namePassenger  = await serchNamePassenger();
-            const nome_embarque =  namePassenger.split("-");
-            const peopleTrip = await PassageirosViagens.create({
-                nome:namePassenger,
-                id_viagem:createTrip.id,
-                horario,
-                nome_embarque:nome_embarque[0]
+            const namePassenger  = await searchNamePassenger();
+            const name_embark =  namePassenger.split("-");
+            const peopleTrip = await PassengerTrip.create({
+                name:namePassenger,
+                id_trip:createTrip.id,
+                time,
+                name_embark:name_embark[0],
+                checked:"true"
 
             });
             return res.json(createTrip);
@@ -87,19 +89,19 @@ module.exports = {
 
     },
     async listAll(req, res) {
-        const userslist = await Viagens.findAll();
+        const usersList = await Trip.findAll();
         console.log(req.userId);
 
-        return res.json(userslist);
+        return res.json(usersList);
 
     },
-    async avaible(req,res){
-        const avaible = await Viagens.findAll({where:{ 
-            pessoas:{
+    async available(req,res){
+        const available = await Trip.findAll({where:{ 
+            people:{
             [Op.lt]: 4,
         }}});
 
-        return res.json(avaible);
+        return res.json(available);
     }
 
 }

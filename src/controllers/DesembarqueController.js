@@ -1,27 +1,25 @@
-const Embarque  = require('../models/Embarque');
-const Bairro  = require('../models/Bairros');
-const Desembarque  = require('../models/Desembarque');
+const Embark  = require('../models/Embarque');
+const Disembark  = require('../models/Desembarque');
 
-const {Op} =require('sequelize');
 
 
 
 
 module.exports={
     async store(req,res){
-        const {id_embarque} = req.params;
-          const {nome,referencia,cep} = req.body;
+        const {id_embark} = req.params;
+          const {name,reference,cep} = req.body;
 
-          const bairro = await Embarque.findByPk(id_embarque);
-          if (!bairro) {
+          const district = await Embark.findByPk(id_embark);
+          if (!district) {
               return res.status(401).json({
                   error:['Embarque não existe'],
               });
           } 
           
 
-          const embarque = await Desembarque.create({nome,referencia,id_embarque,cep});
-          return res.json(embarque);
+          const embark = await Disembark.create({name,reference,id_embark,cep});
+          return res.json(embark);
 
           
          

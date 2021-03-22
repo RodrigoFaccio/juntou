@@ -1,5 +1,5 @@
-const Embarque  = require('../models/Embarque');
-const Bairro  = require('../models/Bairros');
+const Embark  = require('../models/Embarque');
+const District  = require('../models/Bairros');
 const {Op} =require('sequelize');
 
 
@@ -7,19 +7,19 @@ const {Op} =require('sequelize');
 
 module.exports={
     async store(req,res){
-        const {id_bairro} = req.params;
-          const {nome,referencia} = req.body;
+        const {id_district} = req.params;
+          const {name,reference} = req.body;
 
-          const bairro = await Bairro.findByPk(id_bairro);
-          if (!bairro) {
+          const district = await District.findByPk(id_district);
+          if (!district) {
               return res.status(401).json({
-                  error:['Bairro não existe'],
+                  error:['Bairro  não existe'],
               });
           } 
           
 
-          const embarque = await Embarque.create({nome,referencia,id_bairro});
-          return res.json(embarque);
+          const embark = await Embark.create({name,reference,id_district});
+          return res.json(embark);
 
           
          
@@ -28,31 +28,30 @@ module.exports={
 
     },
     async list(req,res){
-        const {id_bairro} = req.params;
-        const bairro = await Bairro.findByPk(id_bairro);
-        const bairros = await Bairro.findAll();
+        const {id_district} = req.params;
+        const district = await District.findByPk(id_district);
 
-        if (!bairro) {
+        if (!district) {
             return res.status(401).json({
-                error:['Bairro não existe'],
+                error:['district não existe'],
             });
         } 
-        const embarquesbairro = await  Embarque.findAll({where:{id_bairro}})
-        return res.json(embarquesbairro);
+        const EmbarkDistrict = await  Embark.findAll({where:{id_district}})
+        return res.json(EmbarkDistrict);
 
     },
     async like(req,res){
         const {name} = req.params;
 
-        const locaisname = await Embarque.findAll({
-            attributes:['nome'],
+        const localName = await Embark.findAll({
+            attributes:['name'],
             where:{
-                nome:{
+                name:{
                     [Op.like]:'%'+name+'%'
                 }
             },
         });
-        return res.json(locaisname);
+        return res.json(localName);
   },
     
   

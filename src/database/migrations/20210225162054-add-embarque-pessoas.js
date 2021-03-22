@@ -3,8 +3,8 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
    return  queryInterface.addColumn(
-      'viagens_pessoas',
-      'nome_embarque',{
+      'trip_people',
+      'name_embark',{
         type:Sequelize.STRING,
       },
     );
@@ -12,8 +12,8 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     return  queryInterface.removeColumn(
-      'viagens_pessoas',
-      'nome_embarque',{
+      'trip_people',
+      'name_embark',{
         type:Sequelize.STRING,
       },
     );
