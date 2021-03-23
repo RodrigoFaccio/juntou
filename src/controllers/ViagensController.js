@@ -66,6 +66,7 @@ module.exports = {
                 id_district,
                 people:1,
                 time,
+                situation:"0"
 
             });
             const namePassenger  = await searchNamePassenger();
@@ -89,7 +90,7 @@ module.exports = {
 
     },
     async listAll(req, res) {
-        const usersList = await Trip.findAll();
+        const usersList = await Trip.findAll({where:{situation:"0"}}) ;
         console.log(req.userId);
 
         return res.json(usersList);
@@ -102,6 +103,15 @@ module.exports = {
         }}});
 
         return res.json(available);
+    },
+    async finalization(req,res){
+        const {id_trip} = req.params;
+        const newSituation = "1";
+        const trip = await Trip.update({ situation:newSituation }, { where: { id: id_trip } });
+if(trip){
+    return res.json({message:'Finalizada com sucesso'})
+
+}
     }
 
 }

@@ -52,6 +52,8 @@ routes.post('/desembarque/:id_embark/cadastro', DesembarqueController.store);
 //viagens
 routes.get('/viagens/lista', Viagens.listAll);
 routes.get('/viagens/list/available', Viagens.available);
+routes.get('/viagens/:id_trip/finalization', Viagens.finalization);
+
 
 
 routes.post('/viagens/:id_user/:id_district/:id_embark/:id_disembark/cadastro', Viagens.store);
