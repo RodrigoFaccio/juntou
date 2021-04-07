@@ -8,6 +8,8 @@ class District extends Model{
         super.init({
             name:DataTypes.STRING,
             cep:DataTypes.STRING,  
+            dominante:DataTypes.INTEGER,
+
             
 
 

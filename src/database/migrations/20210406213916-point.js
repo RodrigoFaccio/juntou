@@ -2,7 +2,8 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('disembarks', { 
+    
+    await queryInterface.createTable('points', { 
       id:{
           allowNull: false,
           autoIncrement: true,
@@ -13,21 +14,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
        },
-       reference: {
+       id_district: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      id_embark: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        
-  
       },
       cep: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      
+    
       created_at: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -38,12 +33,12 @@ module.exports = {
       },
     
     
-    });  
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
     
-      await queryInterface.dropTable('disembarks');
+      await queryInterface.dropTable('points');
      
   }
 };

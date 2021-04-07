@@ -2,8 +2,7 @@ const Trip = require('../models/Viagens');
 const PassengerTrip = require('../models/PassageirosViagens');
 const Passenger = require('../models/UserPassageiro');
 const District = require('../models/Bairros');
-const Disembark = require('../models/Desembarque');
-const Embark = require('../models/Embarque');
+
 const {Op} =require('sequelize');
 const { create } = require('../models/Viagens');
 
@@ -31,6 +30,15 @@ module.exports = {
            console.log("==============================================")
              async function nameTrip(){
                
+                const embark = await District.findByPk(id_district);
+                const disembark = await Disembark.findByPk(id_disembark);
+                const nameEmbarkDisembark =  embark.name+"-"+disembark.name;
+                return(nameEmbarkDisembark);
+
+
+            }
+            async function nameTripPassenger(){
+               
                 const embark = await Embark.findByPk(id_embark);
                 const disembark = await Disembark.findByPk(id_disembark);
                 const nameEmbarkDisembark =  embark.name+"-"+disembark.name;
@@ -43,15 +51,18 @@ module.exports = {
                 return(passenger.name);
             }
         if(tripTrue){
+            const name = await nameTrip();
+            const TripPassenger = await nameTripPassenger();
+
             const people = tripTrue.people + 1;
             const trip = await Trip.update({ people:people  }, { where: { id: tripTrue.id } });
             const namePassenger  = await searchNamePassenger();
-           const name_embark =  namePassenger.split("-");
+
             const peopleTrip = await PassengerTrip.create({
                 name:namePassenger,
                 id_trip:tripTrue.id,
                 time,
-                name_embark:name_embark[0],
+                name_embark:TripPassenger,
                 checked:"true"
 
 
@@ -70,12 +81,13 @@ module.exports = {
 
             });
             const namePassenger  = await searchNamePassenger();
-            const name_embark =  namePassenger.split("-");
+            const TripPassenger = await nameTripPassenger();
+
             const peopleTrip = await PassengerTrip.create({
                 name:namePassenger,
                 id_trip:createTrip.id,
                 time,
-                name_embark:name_embark[0],
+                name_embark:TripPassenger,
                 checked:"true"
 
             });
@@ -112,6 +124,20 @@ if(trip){
     return res.json({message:'Finalizada com sucesso'})
 
 }
-    }
+    },
+
+    async like(req,res){
+        const {name} = req.params;
+
+        const localName = await Trip.findAll({
+            attributes:['name'],
+            where:{
+                name:{
+                    [Op.iLike]:'%'+name+'%'
+                }
+            },
+        });
+        return res.json(localName);
+  },
 
 }

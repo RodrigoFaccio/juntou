@@ -18,6 +18,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      dominante: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       
       created_at: {
         allowNull: false,

@@ -5,16 +5,18 @@ const UserMotoristaController = require('./controllers/UserMotoristaController')
 //token
 const TokenController = require('./controllers/TokenController');
 const LoginMiddwares = require('./middwares/LoginMiddwares.js');
-//localidades
+//Biarros
 const BairrosController = require('./controllers/BairrosController');
-const EmbarqueController = require('./controllers/EmbarqueController');
-const DesembarqueController = require('./controllers/DesembarqueController');
+
 // Viagens
 const Viagens = require('./controllers/ViagensController');
 const PassageiroViagens = require('./controllers/PassageirosViagensController');
 
+//Pontos
+const Point = require('./controllers/PointController');
 
-//testes
+
+
 
 
 
@@ -39,20 +41,31 @@ routes.post('/motorista/login', TokenController.loginMotorista);
 routes.post('/bairro/cadastro', BairrosController.store);
 routes.get('/bairro/lista', BairrosController.list);
 routes.get('/bairro/:name/pesquisa', BairrosController.like);
+routes.get('/point/:name/like/dominante',BairrosController.dominante);
+routes.get('/point/:name/like/noDominante',BairrosController.noDominante);
 
 
-//embarques
-routes.post('/embarque/:id_district/cadastro', EmbarqueController.store);
-routes.get('/embarque/:id_district/list', EmbarqueController.list);
-routes.get('/embarque/:name/pesquisa', EmbarqueController.like);
-//desembarques 
 
-routes.post('/desembarque/:id_embark/cadastro', DesembarqueController.store);
+
+
+//Pontos
+routes.post('/point/:id_district/cadastro',Point.store);
+routes.get('/point/list',Point.list);
+routes.get('/point/:id_district/like',Point.like);
+routes.get('/point/:id_district/list',Point.list);
+
+
+
+
+
+
 
 //viagens
 routes.get('/viagens/lista', Viagens.listAll);
 routes.get('/viagens/list/available', Viagens.available);
 routes.get('/viagens/:id_trip/finalization', Viagens.finalization);
+
+
 
 
 
