@@ -66,6 +66,12 @@ async noDominante(req,res){
     });
     return res.json(localName);
 },
+async info(req,res){
+    const {id_district} = req.params;
+
+    const infoDistrict = await Bairros.findAll({where:{id:id_district}});
+    return res.json(infoDistrict);
+},
     
   
 }

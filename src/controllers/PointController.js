@@ -41,6 +41,11 @@ module.exports = {
         const points = await Point.findAll({where:{id_district}});
         res.json(points);
     },
+    async info(req,res){
+        const {id_point} = req.params;
+        const points = await Point.findAll({where:{id:id_point}});
+        res.json(points);
+    },
 
 
     async like(req,res){

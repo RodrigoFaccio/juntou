@@ -41,8 +41,10 @@ routes.post('/motorista/login', TokenController.loginMotorista);
 routes.post('/bairro/cadastro', BairrosController.store);
 routes.get('/bairro/lista', BairrosController.list);
 routes.get('/bairro/:name/pesquisa', BairrosController.like);
-routes.get('/point/:name/like/dominante',BairrosController.dominante);
-routes.get('/point/:name/like/noDominante',BairrosController.noDominante);
+routes.get('/bairro/:name/like/dominante',BairrosController.dominante);
+routes.get('/bairro/:name/like/noDominante',BairrosController.noDominante);
+routes.get('/bairro/:id_district/info',BairrosController.info);
+
 
 
 
@@ -50,9 +52,10 @@ routes.get('/point/:name/like/noDominante',BairrosController.noDominante);
 
 //Pontos
 routes.post('/point/:id_district/cadastro',Point.store);
-routes.get('/point/list',Point.list);
 routes.get('/point/:id_district/like',Point.like);
 routes.get('/point/:id_district/list',Point.list);
+routes.get('/point/:id_point/info',Point.info);
+
 
 
 
