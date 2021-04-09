@@ -13,15 +13,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      id_district: {
+      id_district_embark: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      id_embark: {
+      id_point_embark: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      id_disembark: {
+      id_district_disembark: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+       id_point_disembark: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

@@ -7,13 +7,11 @@ class Trip extends Model {
     static init(sequelize) {
         super.init({
             name: DataTypes.STRING,
-            id_embark: DataTypes.INTEGER,
-            id_disembark: DataTypes.INTEGER,
-            id_district: DataTypes.INTEGER,
-
-            
+            id_district_embark: DataTypes.INTEGER,
+            id_point_embark: DataTypes.INTEGER,
+            id_district_disembark: DataTypes.INTEGER,
+            id_point_disembark: DataTypes.INTEGER,
             time: DataTypes.STRING,
-            situation: DataTypes.STRING,
 
             people: DataTypes.INTEGER,
 

@@ -57,24 +57,18 @@ routes.get('/point/:id_district/list',Point.list);
 routes.get('/point/:id_point/info',Point.info);
 
 
-
+0
 
 
 
 
 
 //viagens
-routes.get('/viagens/lista', Viagens.listAll);
-routes.get('/viagens/list/available', Viagens.available);
-routes.get('/viagens/:id_trip/finalization', Viagens.finalization);
-
-
-
-
-
-routes.post('/viagens/:id_user/:id_district/:id_embark/:id_disembark/cadastro', Viagens.store);
-routes.get('/viagens/motoristas/:id_trip/lista', PassageiroViagens.indexMotorista);
-
+routes.get('/trip/lista', Viagens.listAll);
+routes.get('/trip/list/available', Viagens.available);
+routes.get('/trip/:id_trip/finalization', Viagens.finalization);
+//criação de viagem
+routes.post('/trip/:id_district_embark/:id_point_embark/:id_district_disembark/:id_point_disembark/:id_user/create', Viagens.createTrip);
 
 
 
