@@ -57,7 +57,7 @@ routes.get('/point/:id_district/list',Point.list);
 routes.get('/point/:id_point/info',Point.info);
 
 
-0
+
 
 
 
@@ -67,8 +67,11 @@ routes.get('/point/:id_point/info',Point.info);
 routes.get('/trip/lista', Viagens.listAll);
 routes.get('/trip/list/available', Viagens.available);
 routes.get('/trip/:id_trip/finalization', Viagens.finalization);
+routes.get('/trip/:id_district_embark/:id_district_disembark/list',Viagens.ListHoursExist);
 //criação de viagem
 routes.post('/trip/:id_district_embark/:id_point_embark/:id_district_disembark/:id_point_disembark/:id_user/create', Viagens.createTrip);
+routes.post('/trip/:id_trip/:id_user/createExist',Viagens.createTripExist);
+
 
 
 

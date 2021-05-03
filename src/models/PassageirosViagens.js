@@ -9,7 +9,7 @@ class TripPeople extends Model {
             name: DataTypes.STRING,
             id_trip: DataTypes.INTEGER,
             time: DataTypes.STRING,
-            name_embark:DataTypes.STRING,
+            id_user:DataTypes.INTEGER
 
 
 

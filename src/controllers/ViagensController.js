@@ -16,42 +16,26 @@ module.exports = {
         const {
            time
         } = req.body;
-        const { id_district_embark,id_point_embark,id_district_disembark,id_point_disembark } = req.params;
-        const name = 'teste';
-        const people =1;
+        const { id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,id_user } = req.params;
+       const  name="teste";
+       const people = 1;
+       const NameUser = await Passenger.findOne({where:{id:id_user}})
+        
 
-        const TripExiste = await Trip.findOne({where:{
-            name,
-            id_district_embark,
-            id_point_embark,
-            id_district_disembark,
-            id_point_disembark,
-            time,
-            people:{
-                [Op.lt]:4
-            }
-        }});
+  
+        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time});
+         await PassengerTrip.create({
+            id_user,
+            name:NameUser.name,
+            id_trip:Trips.id,
+            time
             
-
-    if(TripExiste){
-        //adicionar pessoas a viagem 
-        const peopleActual = TripExiste.people +1;
-       const trip = await Trip.update({ people:peopleActual  }, { where: { id: TripExiste.id } });
-        return res.json(trip);
-    }else{
-        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time})
+        });
         return res.json(Trips);
-    }
-
-        
-           
-        
-
-
     },
 
     async listAll(req, res) {
-        const usersList = await Trip.findAll({where:{situation:"0"}}) ;
+        const usersList = await Trip.findAll();
         console.log(req.userId);
 
         return res.json(usersList);
@@ -88,5 +72,58 @@ if(trip){
         });
         return res.json(localName);
   },
+  async ListHoursExist(req,res){
+    const {id_district_disembark,id_district_embark} = req.params;
+
+    const HoursExist = await Trip.findAll({where:{id_district_disembark,id_district_embark}});
+
+    res.json(HoursExist);
+
+  },
+  async createTripExist(req,res){
+      const {id_trip,id_user}=req.params;
+      const verifyTripExist = await Trip.findByPk(id_trip);
+      const NameUser = await Passenger.findOne({where:{id:id_user}})
+      console.log(NameUser);
+
+      
+
+      if(verifyTripExist){
+          if(verifyTripExist.people<4){
+              const passengerTrip = await PassengerTrip.findAll({where:{id_user:id_user}});
+
+            // if(passengerTrip)
+            //      return res.json('Você já esta cadastrado na viagem');
+
+
+            const peopleNumber  = verifyTripExist.people +1;
+
+            const tripAddPeople = await Trip.update({ people:peopleNumber  }, { where: { id: id_trip} });
+            const addPeopleTrip = await PassengerTrip.create({
+                id_user,
+                name:NameUser.name,
+                id_trip,
+                time:verifyTripExist.time
+                
+            });
+
+
+            res.json(tripAddPeople);
+          }else{
+          res.json('Viagem já esta cheia');
+
+          }
+
+
+      }else{
+          res.json('Viagem nao existe');
+      }
+
+      
+
+
+
+    
+  }
 
 }
