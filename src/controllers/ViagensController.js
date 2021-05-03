@@ -19,8 +19,12 @@ module.exports = {
         const { id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,id_user } = req.params;
        const  name="teste";
        const people = 1;
-       const NameUser = await Passenger.findOne({where:{id:id_user}})
-        
+       const NameUser = await Passenger.findOne({where:{id:id_user}});
+
+       const checkViagemExist = await Trip.findOne({where:{id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time}});
+       console.log(checkViagemExist)
+        if(checkViagemExist)
+            return res.json('Viagem já existe');
 
   
         const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time});
