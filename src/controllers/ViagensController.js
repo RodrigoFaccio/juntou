@@ -2,9 +2,11 @@ const Trip = require('../models/Viagens');
 const PassengerTrip = require('../models/PassageirosViagens');
 const Passenger = require('../models/UserPassageiro');
 const District = require('../models/Bairros');
+const Point = require('../models/Point');
 
 const {Op} =require('sequelize');
 const { json } = require('body-parser');
+const { info } = require('./BairrosController');
 
 
 
@@ -27,7 +29,7 @@ module.exports = {
             return res.json('Viagem já existe');
 
   
-        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time});
+        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time,status:"0"});
          await PassengerTrip.create({
             id_user,
             name:NameUser.name,
@@ -39,7 +41,14 @@ module.exports = {
     },
 
     async listAll(req, res) {
-        const usersList = await Trip.findAll();
+        const usersList = await Trip.findAll({
+            where:{
+                people:{
+                    [Op.gt]:2
+                },
+                status:'0'
+            }
+        });
         console.log(req.userId);
 
         return res.json(usersList);
@@ -56,7 +65,7 @@ module.exports = {
     async finalization(req,res){
         const {id_trip} = req.params;
         const newSituation = "1";
-        const trip = await Trip.update({ situation:newSituation }, { where: { id: id_trip } });
+        const trip = await Trip.update({ status:newSituation }, { where: { id: id_trip } });
 if(trip){
     return res.json({message:'Finalizada com sucesso'})
 
@@ -128,6 +137,51 @@ if(trip){
 
 
     
-  }
+  },
 
+  // pegar passageiros pelo id da viagem 
+    async  listPassengerId(req,res){
+        const  {id_trip} =   req.params;
+
+        const passengers = await PassengerTrip.findAll({
+            where:{
+                id_trip,
+               
+            },
+
+        
+        });
+
+        res.json(passengers);
+    },
+
+    // listar informações sobre a viagem 
+    async  listInfosTripEmbark(req,res){
+        const  {id} =   req.params;
+
+        const tripInfos = await Trip.findOne({where:{id}});
+        const infopointEmbark = await Point.findAll({where:{id:tripInfos.id_point_embark}});
+        const infoDistrictDisembark = await District.findAll({where:{id:tripInfos.id_district_embark}});
+        const namesPoints = infoDistrictDisembark[0].name +' - '+infopointEmbark[0].name;
+
+        res.json(namesPoints);
+    },
+    async  listInfosTripDisembark(req,res){
+        const  {id} =   req.params;
+
+        const tripInfos = await Trip.findOne({where:{id}});
+        const infopointDisembark = await Point.findAll({where:{id:tripInfos.id_point_disembark}});
+        const infoDistrictDisembark = await District.findAll({where:{id:tripInfos.id_district_disembark}});
+        const namesPoints = infoDistrictDisembark[0].name +' - '+infopointDisembark[0].name;
+
+        res.json(namesPoints);
+    },
+async listTripInfo(req,res){
+    const {id_trip} =  req.params;
+
+    const infosTrip = await Trip.findByPk(id_trip);
+
+    res.json(infosTrip);
+}
+   
 }

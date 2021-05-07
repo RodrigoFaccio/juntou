@@ -38,6 +38,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       updated_at: {
         allowNull: false,
         type: Sequelize.STRING,

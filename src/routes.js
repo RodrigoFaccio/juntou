@@ -68,6 +68,13 @@ routes.get('/trip/lista', Viagens.listAll);
 routes.get('/trip/list/available', Viagens.available);
 routes.get('/trip/:id_trip/finalization', Viagens.finalization);
 routes.get('/trip/:id_district_embark/:id_district_disembark/list',Viagens.ListHoursExist);
+routes.get('/trip/:id_trip/listInfos',Viagens.listTripInfo);
+
+// viagens motorista 
+routes.get('/trip/:id_trip/listPassenger',Viagens.listPassengerId);
+
+routes.get('/trip/:id/listInfosTrip',Viagens.listInfosTripEmbark);
+routes.get('/trip/:id/listInfosTripDisembark',Viagens.listInfosTripDisembark);
 //criação de viagem
 routes.post('/trip/:id_district_embark/:id_point_embark/:id_district_disembark/:id_point_disembark/:id_user/create', Viagens.createTrip);
 routes.post('/trip/:id_trip/:id_user/createExist',Viagens.createTripExist);
