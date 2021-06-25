@@ -10,7 +10,7 @@ module.exports={
             
                 return res.json('Usuário já cadastrado');
             }
-          
+         
          
 
           const user = await UserMotorista.create({name,email,password,whatsapp,cpf,marca_carro,placa});
@@ -22,6 +22,14 @@ module.exports={
         console.log(req.userId);
 
         return res.json(userslist);
+
+  },
+  async listUserId(req,res){
+        const {id} = req.params;
+        const motorsList = await UserMotorista.findByPk(id);
+       
+
+        return res.json(motorsList);
 
   },
   

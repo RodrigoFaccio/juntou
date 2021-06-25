@@ -35,7 +35,10 @@ routes.post('/passageiro/login', TokenController.loginPassageiro);
 
 //motoristas
 
+
 routes.post('/motorista/cadastro', UserMotoristaController.store);
+routes.get('/motorista/:id/list', UserMotoristaController.listUserId);
+
 routes.post('/motorista/login', TokenController.loginMotorista);
 //bairros
 routes.post('/bairro/cadastro', BairrosController.store);
@@ -66,9 +69,12 @@ routes.get('/point/:id_point/info',Point.info);
 //viagens
 routes.get('/trip/lista', Viagens.listAll);
 routes.get('/trip/list/available', Viagens.available);
-routes.get('/trip/:id_trip/finalization', Viagens.finalization);
+routes.get('/trip/:id_trip//finalization', Viagens.finalization);
 routes.get('/trip/:id_district_embark/:id_district_disembark/list',Viagens.ListHoursExist);
 routes.get('/trip/:id_trip/listInfos',Viagens.listTripInfo);
+routes.get('/trip/:id_user/checkTripUser',Viagens.checkTripUser);
+routes.get('/trip/:id/checkTripStatus',Viagens.checkTripStatus);
+
 
 // viagens motorista 
 routes.get('/trip/:id_trip/listPassenger',Viagens.listPassengerId);
@@ -77,7 +83,7 @@ routes.get('/trip/:id/listInfosTrip',Viagens.listInfosTripEmbark);
 routes.get('/trip/:id/listInfosTripDisembark',Viagens.listInfosTripDisembark);
 //criação de viagem
 routes.post('/trip/:id_district_embark/:id_point_embark/:id_district_disembark/:id_point_disembark/:id_user/create', Viagens.createTrip);
-routes.post('/trip/:id_trip/:id_user/createExist',Viagens.createTripExist);
+routes.post('/trip/:id_trip/:id_motorista/createExist',Viagens.createTripExist);
 
 
 

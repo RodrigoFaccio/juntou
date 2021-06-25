@@ -15,6 +15,8 @@ class Trip extends Model {
 
             people: DataTypes.INTEGER,
             status: DataTypes.STRING,
+            id_user: DataTypes.STRING,
+
 
 
 

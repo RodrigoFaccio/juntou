@@ -19,9 +19,14 @@ module.exports = {
            time
         } = req.body;
         const { id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,id_user } = req.params;
-       const  name="teste";
        const people = 1;
        const NameUser = await Passenger.findOne({where:{id:id_user}});
+       const DistrictEmbark = await District.findByPk(id_district_embark);
+       const DistrictDisebark = await District.findByPk(id_district_disembark);
+       const name = DistrictEmbark.name+"-"+DistrictDisebark.name;
+
+
+
 
        const checkViagemExist = await Trip.findOne({where:{id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time}});
        console.log(checkViagemExist)
@@ -63,9 +68,9 @@ module.exports = {
         return res.json(available);
     },
     async finalization(req,res){
-        const {id_trip} = req.params;
+        const {id_trip,id_user} = req.params;
         const newSituation = "1";
-        const trip = await Trip.update({ status:newSituation }, { where: { id: id_trip } });
+        const trip = await Trip.update({ status:newSituation,id_user }, { where: { id: id_trip } });
 if(trip){
     return res.json({message:'Finalizada com sucesso'})
 
@@ -94,7 +99,7 @@ if(trip){
 
   },
   async createTripExist(req,res){
-      const {id_trip,id_user}=req.params;
+      const {id_trip,id_user,id_motorista}=req.params;
       const verifyTripExist = await Trip.findByPk(id_trip);
       const NameUser = await Passenger.findOne({where:{id:id_user}})
       console.log(NameUser);
@@ -112,7 +117,7 @@ if(trip){
             const peopleNumber  = verifyTripExist.people +1;
 
             const tripAddPeople = await Trip.update({ people:peopleNumber  }, { where: { id: id_trip} });
-            const addPeopleTrip = await PassengerTrip.create({
+            await PassengerTrip.create({
                 id_user,
                 name:NameUser.name,
                 id_trip,
@@ -182,6 +187,29 @@ async listTripInfo(req,res){
     const infosTrip = await Trip.findByPk(id_trip);
 
     res.json(infosTrip);
-}
+},
+async checkTripUser(req,res){
+    const {id_user} = req.params;
+
+    const userTrip = await PassengerTrip.findOne({where:{id_user}});
+
+    if(userTrip)
+    return res.json(userTrip)
+
+    return res.json('Não a usuarios');
+    
+
+},
+        async checkTripStatus(req,res){
+             const {id} = req.params;
+            const TripStatus = await Trip.findByPk(id);
+            if(!TripStatus)
+                return res.json('Vigame nao existe');
+
+            return res.json(TripStatus)
+
+
+
+        }
    
 }
