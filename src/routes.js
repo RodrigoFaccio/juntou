@@ -56,6 +56,8 @@ routes.get('/bairro/:id_district/info',BairrosController.info);
 //Pontos
 routes.post('/point/:id_district/cadastro',Point.store);
 routes.get('/point/:id_district/like',Point.like);
+routes.get('/point/:name/:id_district/pesquisa',Point.search);
+
 routes.get('/point/:id_district/list',Point.list);
 routes.get('/point/:id_point/info',Point.info);
 
@@ -74,6 +76,7 @@ routes.get('/trip/:id_district_embark/:id_district_disembark/list',Viagens.ListH
 routes.get('/trip/:id_trip/listInfos',Viagens.listTripInfo);
 routes.get('/trip/:id_user/checkTripUser',Viagens.checkTripUser);
 routes.get('/trip/:id/checkTripStatus',Viagens.checkTripStatus);
+routes.get('/trip/:id_trip/:id_user/cancel',Viagens.cancel);
 
 
 // viagens motorista 
@@ -83,7 +86,7 @@ routes.get('/trip/:id/listInfosTrip',Viagens.listInfosTripEmbark);
 routes.get('/trip/:id/listInfosTripDisembark',Viagens.listInfosTripDisembark);
 //criação de viagem
 routes.post('/trip/:id_district_embark/:id_point_embark/:id_district_disembark/:id_point_disembark/:id_user/create', Viagens.createTrip);
-routes.post('/trip/:id_trip/:id_motorista/createExist',Viagens.createTripExist);
+routes.post('/trip/:id_trip/:id_user/createExist',Viagens.createTripExist);
 
 
 

@@ -1,5 +1,6 @@
 const Bairros  = require('../models/Bairros');
 const {Op} =require('sequelize');
+const { json } = require('body-parser');
 
 
 
@@ -27,16 +28,22 @@ module.exports={
   },
   async like(req,res){
         const {name} = req.params;
-
-        const localName = await Bairros.findAll({
+        if(name!=' '){
+            const localName = await Bairros.findAll({
             
-            where:{
-                name:{
-                    [Op.iLike]:'%'+name+'%'
-                }
-            },
-        });
-        return res.json(localName);
+                where:{
+                    name:{
+                        [Op.iLike]:'%'+name+'%'
+                    }
+                },
+            });
+            return res.json(localName);
+        }else{
+            const localName = await Bairros.findAll();
+            return res.json(localName)
+        }
+
+        
   },
   async dominante(req,res){
     const {name} = req.params;

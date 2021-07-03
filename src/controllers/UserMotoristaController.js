@@ -11,7 +11,7 @@ module.exports={
                 return res.json('Usuário já cadastrado');
             }
          
-         
+          
 
           const user = await UserMotorista.create({name,email,password,whatsapp,cpf,marca_carro,placa});
           return res.json(user);

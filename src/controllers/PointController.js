@@ -36,6 +36,26 @@ module.exports = {
 
 
     },
+    async search(req,res){
+        const {name,id_district} = req.params;
+        if(name!=' '){
+            const localName = await Point.findAll({
+            
+                where:{
+                    name:{
+                        [Op.iLike]:'%'+name+'%'
+                    },
+                    id:id_district
+                },
+            });
+            return res.json(localName);
+        }else{
+            const localName = await Point.findAll();
+            return res.json(localName)
+        }
+
+        
+  },
     async list(req,res){
         const {id_district} = req.params;
         const points = await Point.findAll({where:{id_district}});
@@ -52,12 +72,13 @@ module.exports = {
         const {id_district} = req.params;
         
         const dominante = await District.findOne({where:{id:id_district,dominante:1}});
+        console.log(dominante)
 
         if(dominante){
-            const districtDominante = await District.findAll({where:{dominante:0}});
+            const districtDominante = await District.findAll({where:{dominante:1}});
             return res.json(districtDominante);
         }else{
-            const districtDominante = await District.findAll({where:{dominante:1}});
+            const districtDominante = await District.findAll({where:{dominante:0}});
             return res.json(districtDominante);
         }
 

@@ -99,7 +99,7 @@ if(trip){
 
   },
   async createTripExist(req,res){
-      const {id_trip,id_user,id_motorista}=req.params;
+      const {id_trip,id_user}=req.params;
       const verifyTripExist = await Trip.findByPk(id_trip);
       const NameUser = await Passenger.findOne({where:{id:id_user}})
       console.log(NameUser);
@@ -116,8 +116,8 @@ if(trip){
 
             const peopleNumber  = verifyTripExist.people +1;
 
-            const tripAddPeople = await Trip.update({ people:peopleNumber  }, { where: { id: id_trip} });
-            await PassengerTrip.create({
+            await Trip.update({ people:peopleNumber  }, { where: { id: id_trip} });
+            const dateTripCreate = await PassengerTrip.create({
                 id_user,
                 name:NameUser.name,
                 id_trip,
@@ -126,7 +126,7 @@ if(trip){
             });
 
 
-            res.json(tripAddPeople);
+            res.json(dateTripCreate);
           }else{
           res.json('Viagem já esta cheia');
 
@@ -194,7 +194,7 @@ async checkTripUser(req,res){
     const userTrip = await PassengerTrip.findOne({where:{id_user}});
 
     if(userTrip)
-    return res.json(userTrip)
+        return res.json(userTrip)
 
     return res.json('Não a usuarios');
     
@@ -204,9 +204,24 @@ async checkTripUser(req,res){
              const {id} = req.params;
             const TripStatus = await Trip.findByPk(id);
             if(!TripStatus)
-                return res.json('Vigame nao existe');
+                return res.json('Viagem nao existe');
 
             return res.json(TripStatus)
+
+
+
+        },
+        async cancel(req,res){
+            const {id_trip,id_user} = req.params;
+            //subtrair pessoa da viagem
+            const trip = await Trip.findOne({where:{id:id_trip}})
+            const tripCancel = await Trip.update({ people:trip.people-1  }, { where: { id: id_trip} });
+
+
+            const peopleCancel = await PassengerTrip.destroy({where:{id_trip,id_user}})
+            if(tripCancel && peopleCancel)
+                return res.json('Cancelada com sucesso')
+
 
 
 
