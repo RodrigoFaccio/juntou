@@ -30,6 +30,8 @@ const routes = express.Router();
 
 //passageiros
 routes.post('/passageiro/cadastro', UserController.store);
+routes.get('/passageiro/teste', UserController.teste);
+
 routes.get('/passageiro/lista', UserController.index);
 routes.post('/passageiro/login', TokenController.loginPassageiro);
 routes.get('/passageiro/:id/datails', UserController.datails);

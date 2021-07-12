@@ -17,6 +17,9 @@ module.exports={
           return res.json(user);
 
     },
+    async teste(req,res){
+        res.json('ola')
+    },
     async index(req,res){
         const userslist = await User.findAll();
         console.log(req.userId);
