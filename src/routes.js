@@ -32,6 +32,11 @@ const routes = express.Router();
 routes.post('/passageiro/cadastro', UserController.store);
 routes.get('/passageiro/lista', UserController.index);
 routes.post('/passageiro/login', TokenController.loginPassageiro);
+routes.get('/passageiro/:id/datails', UserController.datails);
+routes.post('/passageiro/:id/alteracao', UserController.alteracao);
+
+
+
 
 //motoristas
 
@@ -40,6 +45,10 @@ routes.post('/motorista/cadastro', UserMotoristaController.store);
 routes.get('/motorista/:id/list', UserMotoristaController.listUserId);
 
 routes.post('/motorista/login', TokenController.loginMotorista);
+routes.get('/motorista/:id/datails', UserMotoristaController.datails);
+
+routes.post('/motorista/:id/alteracao', UserMotoristaController.alteracao);
+
 //bairros
 routes.post('/bairro/cadastro', BairrosController.store);
 routes.get('/bairro/lista', BairrosController.list);
@@ -71,7 +80,7 @@ routes.get('/point/:id_point/info',Point.info);
 //viagens
 routes.get('/trip/lista', Viagens.listAll);
 routes.get('/trip/list/available', Viagens.available);
-routes.get('/trip/:id_trip//finalization', Viagens.finalization);
+routes.get('/trip/:id_trip/:id_user/finalization', Viagens.finalization);
 routes.get('/trip/:id_district_embark/:id_district_disembark/list',Viagens.ListHoursExist);
 routes.get('/trip/:id_trip/listInfos',Viagens.listTripInfo);
 routes.get('/trip/:id_user/checkTripUser',Viagens.checkTripUser);

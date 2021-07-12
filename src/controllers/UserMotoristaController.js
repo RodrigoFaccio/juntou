@@ -32,5 +32,19 @@ module.exports={
         return res.json(motorsList);
 
   },
+    async alteracao(req,res){
+      const {id} = req.params;
+      const {name,email,whatsapp} = req.body;
+      const alterUser = await UserMotorista.update({ name,email,whatsapp }, { where: { id } });
+
+      return res.json(alterUser);
+
+  },
+   async datails(req,res){
+      const {id} = req.params;
+        const userDetails = await UserMotorista.findByPk(id)
+
+        return res.json(userDetails);
+  },
   
 }

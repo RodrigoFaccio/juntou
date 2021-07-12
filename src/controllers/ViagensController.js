@@ -74,6 +74,8 @@ module.exports = {
 if(trip){
     return res.json({message:'Finalizada com sucesso'})
 
+}else{
+    return res.json({menssage:"Erro"})
 }
     },
 

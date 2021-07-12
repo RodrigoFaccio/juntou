@@ -24,6 +24,20 @@ module.exports={
         return res.json(userslist);
 
   },
+  async datails(req,res){
+      const {id} = req.params;
+        const userDetails = await User.findByPk(id)
+
+        return res.json(userDetails);
+  },
+  async alteracao(req,res){
+      const {id} = req.params;
+      const {name,email,whatsapp} = req.body;
+      const alterUser = await User.update({ name,email,whatsapp }, { where: { id } });
+
+      return res.json(alterUser);
+
+  }
   
   
 }

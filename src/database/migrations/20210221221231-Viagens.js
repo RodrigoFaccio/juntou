@@ -13,6 +13,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+       valueTrip: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       id_district_embark: {
         allowNull: false,
         type: Sequelize.INTEGER,
