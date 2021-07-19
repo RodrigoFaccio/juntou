@@ -13,7 +13,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-       valueTrip: {
+       
+      id_user:{
         allowNull: false,
         type: Sequelize.STRING,
       },

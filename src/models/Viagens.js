@@ -22,6 +22,7 @@ class Trip extends Model {
 
 
 
+
         }, {
             sequelize
         });

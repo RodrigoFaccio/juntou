@@ -34,7 +34,7 @@ module.exports = {
             return res.json('Viagem já existe');
 
   
-        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time,status:"0"});
+        const Trips = await Trip.create({people,name,id_district_embark,id_point_embark,id_district_disembark,id_point_disembark,time,status:"0",id_user});
          await PassengerTrip.create({
             id_user,
             name:NameUser.name,
