@@ -4,7 +4,7 @@ module.exports = {
     username: 'admin2',
     password: 'juntou1234',
     database: 'database',
-    port:5432,
+    port:14760,
     define: {
         timestamps: true,
         underscored: true,
