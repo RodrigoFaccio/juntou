@@ -26,10 +26,15 @@ const Point = require('./controllers/PointController');
 
 
 
+
 const routes = express.Router();
 
 //passageiros
 routes.post('/passageiro/cadastro', UserController.store);
+routes.get('/',(req,res)=>{
+    res.json('nada encontrado')
+});
+
 
 routes.get('/passageiro/lista', UserController.index);
 routes.post('/passageiro/login', TokenController.loginPassageiro);
